@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Manga Homepage</title>
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+      body {
+      color: black;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .navbar {
+      background-color: darkslategrey;
+    }
+
+    .navbar .nav-link {
+      color: royalblue;
+    }
+
+    .search-bar input[type="text"] {
+      background-color: #503A3A;
+      color: #2E2828;
+    }
+
+    .manga-card {
+      background-color: #f8f9fa;
+      color: darkred;
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+
+    .manga-card img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      box-shadow: 0 5px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .manga-card h5 {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    .manga-card p {
+      font-size: 14px;
+    }
+
+    .manga-card .synopsis-more {
+      display: none;
+    }
+     .logo {
+      width: 105px;
+      height: 105px;
+      margin-right: 10px;
+      margin-bottom: -30px;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="index.html">
+      <img src="logo.png" alt="Logo" class="logo">
+      
+    </a>
+    <a button class="nav-link ml-auto" href="search.html">
+      <img src="search-icon.png" alt="Search" width="30" height="30">
+      <b>search</b>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+        <li class="nav-item">
+          <a class="nav-link" href=""></a>
+        </li>
+        </li>
+         <li class="nav-item">
+          <a class="nav-link" href="index.html">home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="manga.html">Manga</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="quotes.html">quotes</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="about.html">about</a>
+        </li>
+         <li class="nav-item">
+          <a class="nav-link" href="contact.html">contact</a>
+        </li>
+
+      </ul>
+    </div>
+  </nav>
+  
+  <div class="container mt-4">
+    <h2><b>Explore Manga</b></h2>
+    <div id="popular-manga" class="row"></div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script>
+  $(document).ready(function() {
+  var popularMangaContainer = $('#popular-manga');
+
+  $.ajax({
+    url: 'https://kitsu.io/api/edge/manga?sort=updatedAt&page[limit]=20',
+    method: 'GET',
+    success: function(response) {
+      var popularManga = response.data;
+
+      popularManga.forEach(function(manga) {
+        var mangaCard = $('<div class="col-sm-6 col-md-4 col-lg-3">');
+        var mangaImage = $('<img class="card-img-top">').attr('src', manga.attributes.posterImage.medium);
+        var mangaCardBody = $('<div class="manga-card">');
+        var mangaTitle = $('<h5 class="card-title">').text(manga.attributes.canonicalTitle);
+        var mangaSynopsis = $('<p class="card-text synopsis-short">').text(truncateSynopsis(manga.attributes.synopsis, 100));
+        var mangaFullSynopsis = $('<p class="card-text d-none">').text(manga.attributes.synopsis);
+        var mangaChapterCount = $('<p class="card-text">').text('Chapters: ' + manga.attributes.chapterCount);
+        var mangaType =$('<p class="card-text">').text('type: ' + manga.attributes.mangaType);
+        var mangaStartDate =$('<p class="card-text">').text(' release date: ' + manga.attributes.startDate);
+        var mangaAverageRating =$('<p class="card-text">').text('ratings: ' + manga.attributes.averageRating);
+        var showMoreButton = $('<button class="btn btn-link">').text('Show More');
+
+        mangaCardBody.append(mangaTitle);
+        mangaCardBody.append(mangaSynopsis);
+        mangaCardBody.append(mangaFullSynopsis);
+        mangaCardBody.append(mangaChapterCount);
+        mangaCardBody.append(mangaType);
+        mangaCardBody.append(mangaStartDate);
+        mangaCardBody.append(mangaAverageRating);
+        mangaCardBody.append(showMoreButton);
+
+        showMoreButton.on('click', function() {
+          mangaSynopsis.toggleClass('d-none');
+          mangaFullSynopsis.toggleClass('d-none');
+          if (mangaFullSynopsis.hasClass('d-none')) {
+            showMoreButton.text('Show More');
+          } else {
+            showMoreButton.text('Show Less');
+          }
+        });
+
+        mangaCard.append(mangaImage);
+        mangaCard.append(mangaCardBody);
+
+        popularMangaContainer.append(mangaCard);
+      });
+    },
+    error: function(error) {
+      console.log('Error:', error);
+    }
+  });
+});
+
+function truncateSynopsis(synopsis, maxLength) {
+  if (synopsis.length <= maxLength) {
+    return synopsis;
+  } else {
+    return synopsis.slice(0, maxLength) + '...';
+  }
+}
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AnimeBookZ</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    .container {
+      margin-top: 20px;
+    }
+
+    .quote-card {
+      margin-bottom: 20px;
+      padding: 20px;
+      border-radius: 5px;
+      background-color: #f8f9fa;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .quote-card p {
+      font-size: 18px;
+      margin-bottom: 5px;
+    }
+
+    .quote-card small {
+      font-size: 14px;
+    }
+
+    .logo {
+      width: 105px;
+      height: 105px;
+      margin-right: 10px;
+      margin-bottom: -30px;
+    }
+    
+  </style>
+  <script>
+    function showQuotes() {
+      fetch("https://animechan.vercel.app/api/quotes")
+        .then((response) => response.json())
+        .then((quotes) => displayQuotes(quotes));
+    }
+
+    function displayQuotes(quotes) {
+      const quotesContainer = document.getElementById("quotes-container");
+
+      // Clear previous quotes
+      quotesContainer.innerHTML = "";
+
+      // Display each quote
+      quotes.forEach((quote) => {
+        const quoteCard = document.createElement("div");
+        quoteCard.classList.add("quote-card");
+
+        const quoteText = document.createElement("p");
+        quoteText.textContent = `"${quote.quote}"`;
+
+        const quoteCharacter = document.createElement("p");
+        quoteCharacter.innerHTML = `<strong>Character:</strong> ${quote.character}`;
+
+        const quoteAnime = document.createElement("p");
+        quoteAnime.innerHTML = `<strong>Anime:</strong> ${quote.anime}`;
+
+        quoteCard.appendChild(quoteText);
+        quoteCard.appendChild(quoteCharacter);
+        quoteCard.appendChild(quoteAnime);
+
+        quotesContainer.appendChild(quoteCard);
+      });
+    }
+  </script>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="index.html">
+      <img src="logo.png" alt="Logo" class="logo">
+      
+    </a>
+    <a button class="nav-link ml-auto" href="search.html">
+      <img src="search-icon.png" alt="Search" width="30" height="30">
+      <b>search</b>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+        <li class="nav-item">
+          <a class="nav-link" href=""></a>
+        </li>
+        </li>
+         <li class="nav-item">
+          <a class="nav-link" href="index.html">home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="manga.html">Manga</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="quotes.html">quotes</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="about.html">about</a>
+        </li>
+         <li class="nav-item">
+          <a class="nav-link" href="contact.html">contact</a>
+        </li>
+
+      </ul>
+    </div>
+  </nav>
+  
+
+
+  
+ 
+
+  
+  <div class="container">
+    <button class="btn btn-primary" onclick="showQuotes()">show Quotes</button>
+    <div id="quotes-container"></div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

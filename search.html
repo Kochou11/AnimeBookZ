@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AnimeBookZ</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="style.css">
+  
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="index.html">
+      <img src="logo.png" alt="Aniformation Logo" class="navbar-logo">
+    </a>
+      
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
+      aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href=""></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="index.html">Home</a>
+        </li>
+               <li class="nav-item active">
+          <a class="nav-link" href="manga.html">Manga</a>
+        </li>
+<li class="nav-item">
+  <a class="nav-link" href="quotes.html">quotes</a>
+</li>
+ <li class="nav-item">
+          <a class="nav-link" href="about.html">about</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="contact.html">Contact</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+ <br>
+ 
+ <form class="form-inline ml-auto">
+      <input class="form-control mr-2" type="search" placeholder="Search Anime" aria-label="Search" id="search-input">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="search-button">Search</button>
+    </form>
+  <div class="container mt-4" id="search-results">
+    <h2>Search Results</h2>
+    <div class="row mt-4" id="search-results-container"></div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.3/umd/popper.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+  <script>
+   const searchInput = document.getElementById('search-input');
+    const searchButton = document.getElementById('search-button');
+    const searchResultsContainer = document.getElementById('search-results-container');
+
+    function createSearchResultCard(anime) {
+      const card = `
+        <div class="col-md-4 mb-4">
+          <div class="card">
+            <img src="${anime.poster}" class="card-img-top" alt="${anime.title}">
+            <div class="card-body">
+              <h5 class="card-title">${anime.title}</h5>
+              <p class="card-text">${anime.synopsis}</p>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">Popularity: ${anime.popularity}</li>
+                <li class="list-group-item">Episodes: ${anime.episodes}</li>
+                <li class="list-group-item">Score: ${anime.score}</li>
+                <li class="list-group-item">Type: ${anime.type}</li>
+                <li class="list-group-item">Start Date: ${anime.start_date}</li>
+                <li class="list-group-item">End Date: ${anime.end_date}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      `;
+      return card;
+    }
+
+    function searchAnime(query) {
+// Clear previous search results
+searchResultsContainer.innerHTML = '';
+  // Make request to Jikan API
+  $.ajax({
+    url: `https://api.jikan.moe/v3/search/anime?q=${query}&page=1`,
+    type: 'GET',
+    dataType: 'json',
+    success: function (result) {
+      const animeResults = result.results;
+      // Loop through anime results and create cards
+      animeResults.forEach(anime => {
+        const card = createSearchResultCard({
+          title: anime.title,
+          synopsis: anime.synopsis,
+          poster: anime.image_url,
+          popularity: anime.popularity,
+          episodes: anime.chapters,
+          score: anime.score,
+          type: anime.type,
+          start_date: anime.start_date,
+          end_date: anime.end_date
+        });
+        searchResultsContainer.innerHTML += card;
+      });
+    },
+    error: function (xhr, status, error) {
+      console.log('Error:', error);
+    }
+  });
+
+  // Make request to Kitsu API
+  $.ajax({
+    url: `https://kitsu.io/api/edge/anime?filter[text]=${query}&page[limit]=10&page[offset]=0`,
+    type: 'GET',
+    dataType: 'json',
+    headers: {
+      'Accept': 'application/vnd.api+json',
+      'Content-Type': 'application/vnd.api+json'
+    },
+    success: function (result) {
+      const animeResults = result.data;
+      // Loop through anime results and create cards
+      animeResults.forEach(anime => {
+        const card = createSearchResultCard({
+          title: anime.attributes.titles.en || anime.attributes.canonicalTitle,
+          synopsis: anime.attributes.synopsis,
+          poster: anime.attributes.posterImage.medium,
+          popularity: anime.attributes.popularityRank,
+          episodes: anime.attributes.episodeCount,
+          score: anime.attributes.averageRating,
+          type: anime.attributes.subtype,
+          start_date: anime.attributes.startDate,
+          end_date: anime.attributes.endDate
+        });
+        searchResultsContainer.innerHTML += card;
+      });
+    },
+    error: function (xhr, status, error) {
+      console.log('Error:', error);
+    }
+  });
+}
+
+searchButton.addEventListener('click', function (event) {
+  event.preventDefault();
+  const query = searchInput.value;
+  searchAnime(query);
+}); // JavaScript code remains unchanged
+  </script>
+</body>
+</html>
