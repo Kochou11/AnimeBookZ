@@ -1,6 +1,51 @@
+<p align="center">
+
+  <a href="https://github.com/Kochou11/AnimBookZ">
+
+<img src="logo.png" alt="Logo" width="100" height="100"> 
+
+  </a>
+
+  <h3 align="center">AnimeBookZ</h3>
+
+  <p align="center">
+
+<samp>AnimeBookZ is a vibrant and engaging website dedicated to anime and manga enthusiasts.which uses <a href="https://kitsu.docs.apiary.io/"> Kitsu api </a> <a href="https://jikan.moe"> jikan api </a> 
+  <a href="https://animechan.vercel.app/docs"> anime chan api </a> 
+
+  
+
+  </samp>
+
+    
+
+    
+
+   
+
+    
+
+  
+
+  
+
+ 
+
+    
+
+     
+
+    
+
+    
+
+   
+
+  </p>
+
+</p>
 
 
-AnimeBookZ is a vibrant and engaging website dedicated to anime and manga enthusiasts. 
 
 
 # AnimeBookZ
