@@ -48,7 +48,7 @@
 
 
 
-# AnimeBookZ
+# Introduction 
 AnimeBookZ is a vibrant and engaging website dedicated to anime and manga enthusiasts. Immerse yourself in a vast collection of anime and manga titles, discover new series, and stay up to date with the latest trends. Our platform offers a seamless browsing experience, allowing you to explore a wide range of anime and manga content.
 
 # Key Features:
