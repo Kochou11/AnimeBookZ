@@ -8,12 +8,12 @@ AnimeBookZ is a vibrant and engaging website dedicated to anime and manga enthus
 
 # Key Features:
 
-Extensive Anime and Manga Library: Dive into a comprehensive collection of anime and manga titles across various genres and themes.
+1. Extensive Anime and Manga Library: Dive into a comprehensive collection of anime and manga titles across various genres and themes.
 
-Search Functionality: Find your favorite anime series or manga titles with ease using our intuitive search feature.
+2. Search Functionality: Find your favorite anime series or manga titles with ease using our intuitive search feature.
 
-Anime Facts and Trivia: Delight in a wealth of fascinating anime facts and trivia to expand your knowledge and share with fellow fans.
+3. Anime Facts and Trivia: Delight in a wealth of fascinating anime facts and trivia to expand your knowledge and share with fellow fans.
 
-Upcoming Features: Stay tuned for exciting updates and upcoming features that will enhance your AnimeBookZ experience even further.
+4. Upcoming Features: Stay tuned for exciting updates and upcoming features that will enhance your AnimeBookZ experience even further.
 
 Experience a world of captivating stories, unforgettable characters, and limitless imagination at AnimeBookZ. Start your journey today!
